@@ -40,10 +40,10 @@ const items = [
 const bubble = { chaos: { x: 250, y: 100 }, slotX: 270, f: { amp: 7, rot: 3, dur: 5.4, delay: 0.3 } };
 
 /* O MAPA fica no centro. No caos ele é o "destino" confuso; na ordem vira o centro da bandeja. */
-const MAP_W = 230;
-const MAP_H = 198; // proporção do PNG (640 x 552)
+const MAP_W = 220;
+const MAP_H = 250; // proporção do PNG (640 x 552)
 const MAP_SCALE_ORDER = 0.56;
-const map = { y: 4, f: { amp: 8, rot: 2.5, dur: 6.2, delay: 0.1 } };
+const map = { y: 0, f: { amp: 8, rot: 2.5, dur: 6.2, delay: 0.1 } };
 
 const SLOT_Y = 12;
 
@@ -365,7 +365,7 @@ function S2({ toggle, setToggle }: S2Props) {
                 height: '100%',
                 objectFit: 'contain',
                 imageRendering: 'pixelated', // mantém o pixel art nítido ao ampliar
-                filter: 'drop-shadow(0 12px 18px rgba(0,0,0,0.45))',
+                filter: 'drop-shadow(0 120px 18px rgba(0,0,0,0.45))',
               }}
             />
           </Floaty>

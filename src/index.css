@@ -63,7 +63,7 @@ body {
 .scene {
   position: absolute;
   inset: 0;
-  padding: 70px 76px 64px;
+  padding: 50px 76px 84px;
   display: flex;
   flex-direction: column;
   justify-content: center;
