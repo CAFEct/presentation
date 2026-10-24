@@ -11,12 +11,13 @@ const nailImg = './public/imgs/trofeu.png'; // Using trophy as nail art icon
 const checkImg = './public/imgs/check.png';
 const trophyImg = './public/imgs/trofeu.png';
 const rocketImg = './public/imgs/rocket.png';
+const targetImg = './public/imgs/target.png'; // Target/practice icon
 
 function S7() {
   const st = [
     { step: 1, title: 'Escolha', desc: 'seu kit ou os materiais que quer', icon: worldImg, alt: 'Escolha' },
     { step: 2, title: 'Aprenda', desc: 'assistindo aos vídeos do curso', icon: cameraImg, alt: 'Aprenda' },
-    { step: 3, title: 'Pratique', desc: 'com material profissional', icon: nailImg, alt: 'Pratique' },
+    { step: 3, title: 'Pratique', desc: 'com material profissional', icon: targetImg, alt: 'Pratique' },
     { step: 4, title: 'Complete', desc: 'todas as aulas até o final', icon: checkImg, alt: 'Complete' },
     { step: 5, title: 'Receba', desc: 'seu certificado de conclusão', icon: trophyImg, alt: 'Receba' },
     { step: 6, title: 'Comece', desc: 'sua nova carreira!', icon: rocketImg, alt: 'Comece' },

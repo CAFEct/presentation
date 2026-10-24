@@ -11,8 +11,9 @@ import S7 from './components/Slides/S7';
 import S8 from './components/Slides/S8';
 import S9 from './components/Slides/S9';
 import S10 from './components/Slides/S10';
+import S11 from './components/Slides/S11';
 
-const SLIDES = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10];
+const SLIDES = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11];
 const LEDS = [
   '#f0a9bf',
   '#f0a9bf',
@@ -24,6 +25,7 @@ const LEDS = [
   '#ff5b78',
   '#d9708f',
   '#f0a9bf',
+  '#d9708f',
 ];
 
 const shell = {
@@ -143,7 +145,7 @@ function App() {
       } else if (key === 'Home')
         go(0);
       else if (key === 'End')
-        go(9);
+        go(SLIDES.length - 1);
       else if (idx === 2 && ['1', '2', '3'].includes(key)) {
         // Open videos 1, 2, 3 on slide 3
         setSlide3Video(parseInt(key) - 1);

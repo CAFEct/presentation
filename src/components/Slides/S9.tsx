@@ -6,7 +6,7 @@ import FloatingIcons from '../FloatingIcons';
 
 // Image paths
 const sparkleImg = './public/imgs/trofeu.png'; // Sparkle-like effect
-const qualityImg = './public/imgs/vscod.png'; // Quality badge
+const crownImg = './public/imgs/crown.png'; // Crown as quality/badge hero visual
 const targetImg = './public/imgs/brauin.png'; // Target/aim (Brazil flag style)
 const moneyImg = './public/imgs/money.png';
 const certImg = './public/imgs/formatura.png';
@@ -15,7 +15,7 @@ const deliveryImg = './public/imgs/world.png';
 function S9() {
   const w = [
     { icon: sparkleImg, alt: 'Tudo em um só lugar', title: 'Tudo em um só lugar', desc: 'Sem pesquisar em vários sites', color: 'var(--rose)' },
-    { icon: qualityImg, alt: 'Qualidade garantida', title: 'Qualidade garantida', desc: 'Materiais testados por profissionais', color: 'var(--blue)' },
+    { icon: crownImg, alt: 'Qualidade garantida', title: 'Qualidade garantida', desc: 'Materiais testados por profissionais', color: 'var(--blue)' },
     { icon: targetImg, alt: 'Foco brasileiro', title: 'Foco brasileiro', desc: 'Criado para o mercado do Brasil', color: 'var(--mint)' },
     { icon: moneyImg, alt: 'Preços justos', title: 'Preços justos', desc: 'Qualidade sem cobrança abusiva', color: 'var(--gold)' },
     { icon: certImg, alt: 'Certificação oficial', title: 'Certificação oficial', desc: 'Reconhecimento do seu empreendimento', color: 'var(--rose)' },
