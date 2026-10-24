@@ -13,7 +13,7 @@ interface ImageIconProps {
 const ImageIcon = ({
   src,
   alt,
-  size = 44,
+  size = 64,
   className = '',
   style = {},
   colored = false,

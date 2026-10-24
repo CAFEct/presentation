@@ -1,13 +1,20 @@
 import { motion } from 'framer-motion';
 import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
+import ImageIcon from '../ImageIcon';
+
+// Image paths
+const trophyImg = '/imgs/trofeu.png';
+const worldImg = '/imgs/world.png';
+const briefcaseImg = '/imgs/money.png';
+const cameraImg = '/imgs/camera.png';
 
 function S6() {
   const b = [
-    ['🏅', 'Certificado Oficial', 'Mostra seu conhecimento e compromisso', 'var(--gold)'],
-    ['📱', 'Rede de profissionais', 'Conecta você com outros artistas', 'var(--blue)'],
-    ['💼', 'Guia para sua carreira', 'Aprenda a atrair e fidelizar clientes', 'var(--mint)'],
-    ['📸', 'Portfólio online', 'Mostre seu trabalho', 'var(--rose)'],
+    { icon: trophyImg, alt: 'Trophy', title: 'Certificado Oficial', desc: 'Mostra seu conhecimento e compromisso', color: 'var(--gold)' },
+    { icon: worldImg, alt: 'World', title: 'Rede de profissionais', desc: 'Conecta você com outros artistas', color: 'var(--blue)' },
+    { icon: briefcaseImg, alt: 'Briefcase', title: 'Guia para sua carreira', desc: 'Aprenda a atrair e fidelizar clientes', color: 'var(--mint)' },
+    { icon: cameraImg, alt: 'Camera', title: 'Portfólio online', desc: 'Mostre seu trabalho', color: 'var(--rose)' },
   ];
 
   return (
@@ -25,15 +32,13 @@ function S6() {
         Seu trabalho e sua vida <em>mudam</em>
       </motion.h2>
       <div className="grid c2" style={{ marginBottom: 22 }}>
-        {b.map(([i, t, d, c]) => (
-          <Tilt key={t} ledColor={c}>
+        {b.map(({ icon, alt, title, desc, color }) => (
+          <Tilt key={title} ledColor={color}>
             <div className="row" style={{ gap: 18 }}>
-              <div className="ico" style={{ fontSize: 44 }}>
-                {i}
-              </div>
+              <ImageIcon src={icon} alt={alt} size={56} />
               <div>
-                <h3 style={{ margin: 0, fontSize: 21 }}>{t}</h3>
-                <p style={{ fontSize: 15 }}>{d}</p>
+                <h3 style={{ margin: 0, fontSize: 21 }}>{title}</h3>
+                <p style={{ fontSize: 15 }}>{desc}</p>
               </div>
             </div>
           </Tilt>

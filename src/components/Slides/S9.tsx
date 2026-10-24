@@ -1,15 +1,24 @@
 import { motion } from 'framer-motion';
 import Eyebrow from '../Eyebrow';
 import Tilt from '../Tilt';
+import ImageIcon from '../ImageIcon';
+
+// Image paths
+const sparkleImg = '/imgs/trofeu.png'; // Sparkle-like effect
+const qualityImg = '/imgs/vscod.png'; // Quality badge
+const targetImg = '/imgs/brauin.png'; // Target/aim (Brazil flag style)
+const moneyImg = '/imgs/money.png';
+const certImg = '/imgs/formatura.png';
+const deliveryImg = '/imgs/world.png';
 
 function S9() {
   const w = [
-    ['✨', 'Tudo em um só lugar', 'Sem pesquisar em vários sites', 'var(--rose)'],
-    ['💎', 'Qualidade garantida', 'Materiais testados por profissionais', 'var(--blue)'],
-    ['🎯', 'Foco brasileiro', 'Criado para o mercado do Brasil', 'var(--mint)'],
-    ['💰', 'Preços justos', 'Qualidade sem cobrança abusiva', 'var(--gold)'],
-    ['🎓', 'Certificação oficial', 'Reconhecimento do seu empreendimento', 'var(--rose)'],
-    ['🚚', 'Entrega rápida', 'Materiais entregues em tempo hábil', 'var(--blue)'],
+    { icon: sparkleImg, alt: 'Tudo em um só lugar', title: 'Tudo em um só lugar', desc: 'Sem pesquisar em vários sites', color: 'var(--rose)' },
+    { icon: qualityImg, alt: 'Qualidade garantida', title: 'Qualidade garantida', desc: 'Materiais testados por profissionais', color: 'var(--blue)' },
+    { icon: targetImg, alt: 'Foco brasileiro', title: 'Foco brasileiro', desc: 'Criado para o mercado do Brasil', color: 'var(--mint)' },
+    { icon: moneyImg, alt: 'Preços justos', title: 'Preços justos', desc: 'Qualidade sem cobrança abusiva', color: 'var(--gold)' },
+    { icon: certImg, alt: 'Certificação oficial', title: 'Certificação oficial', desc: 'Reconhecimento do seu empreendimento', color: 'var(--rose)' },
+    { icon: deliveryImg, alt: 'Entrega rápida', title: 'Entrega rápida', desc: 'Materiais entregues em tempo hábil', color: 'var(--blue)' },
   ];
 
   return (
@@ -27,11 +36,11 @@ function S9() {
         Por que escolher o <em>Esmalt'up?</em>
       </motion.h2>
       <div className="grid c3" style={{ gap: 18 }}>
-        {w.map(([i, t, d, c]) => (
-          <Tilt key={t} ledColor={c}>
-            <div className="ico">{i}</div>
-            <h3>{t}</h3>
-            <p>{d}</p>
+        {w.map(({ icon, alt, title, desc, color }) => (
+          <Tilt key={title} ledColor={color}>
+            <ImageIcon src={icon} alt={alt} size={56} />
+            <h3>{title}</h3>
+            <p>{desc}</p>
           </Tilt>
         ))}
       </div>

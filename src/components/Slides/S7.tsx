@@ -1,15 +1,24 @@
 import { motion } from 'framer-motion';
 import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
+import ImageIcon from '../ImageIcon';
+
+// Image paths
+const worldImg = '/imgs/world.png';
+const cameraImg = '/imgs/camera.png';
+const nailImg = '/imgs/trofeu.png'; // Using trophy as nail art icon
+const checkImg = '/imgs/check.png';
+const trophyImg = '/imgs/trofeu.png';
+const rocketImg = '/imgs/rocket.png';
 
 function S7() {
   const st = [
-    ['Escolha', 'seu kit ou os materiais que quer', '🛍️'],
-    ['Aprenda', 'assistindo aos vídeos do curso', '🎬'],
-    ['Pratique', 'com material profissional', '💅'],
-    ['Complete', 'todas as aulas até o final', '✅'],
-    ['Receba', 'seu certificado de conclusão', '🏅'],
-    ['Comece', 'sua nova carreira!', '🚀'],
+    { step: 1, title: 'Escolha', desc: 'seu kit ou os materiais que quer', icon: worldImg, alt: 'Escolha' },
+    { step: 2, title: 'Aprenda', desc: 'assistindo aos vídeos do curso', icon: cameraImg, alt: 'Aprenda' },
+    { step: 3, title: 'Pratique', desc: 'com material profissional', icon: nailImg, alt: 'Pratique' },
+    { step: 4, title: 'Complete', desc: 'todas as aulas até o final', icon: checkImg, alt: 'Complete' },
+    { step: 5, title: 'Receba', desc: 'seu certificado de conclusão', icon: trophyImg, alt: 'Receba' },
+    { step: 6, title: 'Comece', desc: 'sua nova carreira!', icon: rocketImg, alt: 'Comece' },
   ];
 
   return (
@@ -44,32 +53,31 @@ function S7() {
           }}
         />
         <div className="grid c6" style={{ gap: 14 }}>
-          {st.map(([t, d, i], k) => (
-            <motion.div key={t} variants="item" style={{ textAlign: 'center' }}>
+          {st.map(({ step, title, desc, icon, alt }, k) => (
+            <motion.div key={title} variants="item" style={{ textAlign: 'center' }}>
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.8 + k * 0.28, type: 'spring', stiffness: 200 }}
                 className="glass"
                 style={{
-                  width: 68,
-                  height: 68,
+                  width: 80,
+                  height: 80,
                   borderRadius: '50%',
                   margin: '0 auto 16px',
                   display: 'grid',
                   placeItems: 'center',
-                  fontSize: 28,
                   padding: 0,
                 }}
               >
-                {i}
+                <ImageIcon src={icon} alt={alt} size={36} />
               </motion.div>
               <Tilt strength={14}>
                 <b style={{ color: 'var(--rose)', fontSize: 13 }}>
-                  0{k + 1}
+                  0{step}
                 </b>
-                <h3 style={{ margin: '4px 0 6px', fontSize: 18 }}>{t}</h3>
-                <p style={{ fontSize: 13 }}>{d}</p>
+                <h3 style={{ margin: '4px 0 6px', fontSize: 18 }}>{title}</h3>
+                <p style={{ fontSize: 13 }}>{desc}</p>
               </Tilt>
             </motion.div>
           ))}
