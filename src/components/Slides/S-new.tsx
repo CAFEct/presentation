@@ -232,24 +232,8 @@ return (
       )}
     </div>
   );
-}
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #1a0e2e 100%)',
-        overflow: 'hidden',
-        position: 'relative',
-      }}
-    >
-      <GridBackground reduced={reduced} />
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'%3E%3Cfilter id=\\'noise\\'%3E%3CfeTurbulence type=\\'fractalNoise\\' baseFrequency=\\.9\\' numOctaves=\\'4\\' stitchTiles=\\'stitch\\'/%3E%3E/filter%3E%3Crect width=\\'100%\\' height=\\'100\\' fill=\\'url(%23noise)\\' /%3E%3C/svg\\>")',
-          opacity: 0.03,
+}"}/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'%3E%3Cfilter id=\\'noise\\'%3E%3CfeTurbulence type=\\'fractalNoise\\' baseFrequency=\\.9\\' numOctaves=\\'4\\' stitchTiles=\\'stitch\\'/%3E%3E/filter%3E%3Crect width=\\'100%\\' height=\\'100\\' fill=\\'url(%23noise)\\' /%3E%3C/svg\\>")',
+          }
         }}
         animate={{ opacity: [1, 0.9, 1] }}
       />

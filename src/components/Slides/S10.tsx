@@ -22,13 +22,6 @@ function S10() {
           ✦ Esmalt'up
         </motion.span>
       </motion.div>
-      <motion.p
-        variants="item"
-        className="tag"
-        style={{ marginTop: 26 }}
-      >
-        [Nomes da equipe]
-      </motion.p>
     </div>
   );
 }

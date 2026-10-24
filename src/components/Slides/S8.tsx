@@ -83,16 +83,48 @@ function S8() {
             >
               {/* Crown */}
               <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.5 }}
+                initial={{ opacity: 0, y: -30, scale: 0.5, rotate: -15 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  rotate: [0, -5, 0, 5, 0],
+                  filter: [
+                    'drop-shadow(0 0 0px rgba(240,169,191,0))',
+                    'drop-shadow(0 0 20px rgba(240,169,191,0.6))',
+                    'drop-shadow(0 0 30px rgba(240,169,191,0.8))',
+                    'drop-shadow(0 0 20px rgba(240,169,191,0.6))',
+                    'drop-shadow(0 0 0px rgba(240,169,191,0))',
+                  ]
+                }}
+                transition={{ 
+                  delay: 1, 
+                  duration: 1.5,
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 12,
+                  rotate: { duration: 2, repeat: Infinity }
+                }}
                 style={{
                   position: 'absolute',
-                  top: -50,
-                  fontSize: 48,
+                  top: -60,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: 64,
+                  height: 64,
+                  zIndex: 10,
                 }}
               >
-                👑
+                <img 
+                  src="/imgs/crown.png" 
+                  alt="Coroa de 1º lugar"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    filter: 'drop-shadow(0 0 20px rgba(240,169,191,0.6))',
+                  }}
+                />
               </motion.div>
               <span style={{ fontSize: 40, fontWeight: 700, color: 'var(--rose)' }}>1</span>
               <motion.div

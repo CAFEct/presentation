@@ -49,8 +49,8 @@ function S9() {
       {/* Floating icons */}
       <FloatingIcons
         icons={[
-          { src: sparkleImg, alt: 'Quality', size: 48 },
-          { src: targetImg, alt: 'Focus', size: 52 },
+          { src: sparkleImg, alt: 'Tudo em um só lugar', size: 48 },
+          { src: crownImg, alt: 'Qualidade', size: 52 },
           { src: certImg, alt: 'Cert', size: 56 },
         ]}
         positions={[

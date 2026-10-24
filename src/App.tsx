@@ -11,9 +11,8 @@ import S7 from './components/Slides/S7';
 import S8 from './components/Slides/S8';
 import S9 from './components/Slides/S9';
 import S10 from './components/Slides/S10';
-import S11 from './components/Slides/S11';
 
-const SLIDES = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11];
+const SLIDES = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10];
 const LEDS = [
   '#f0a9bf',
   '#f0a9bf',
@@ -25,7 +24,6 @@ const LEDS = [
   '#ff5b78',
   '#d9708f',
   '#f0a9bf',
-  '#d9708f',
 ];
 
 const shell = {
