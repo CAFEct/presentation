@@ -45,6 +45,20 @@ function S9() {
           </Tilt>
         ))}
       </div>
+
+      {/* Floating icons */}
+      <FloatingIcons
+        icons={[
+          { src: sparkleImg, alt: 'Quality', size: 48 },
+          { src: targetImg, alt: 'Focus', size: 52 },
+          { src: certImg, alt: 'Cert', size: 56 },
+        ]}
+        positions={[
+          { top: 80, left: 45 },
+          { top: 90, right: 55 },
+          { bottom: 100, left: 75 },
+        ]}
+      />
     </>
   );
 }
