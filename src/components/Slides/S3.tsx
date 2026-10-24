@@ -1,204 +1,348 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
-import { Lead, H2 } from '../Typography';
-import { useState } from 'react';
+import { H2 } from '../Typography';
+import { useState, useRef, useEffect } from 'react';
 
 // Image paths from public folder
-const paletaImg = '/imgs/paleta.png';
-const wrenchImg = '/imgs/wrench.png';
-const formaturaImg = '/imgs/formatura.png';
+const paletaImg = './public/imgs/paleta.png';
+const wrenchImg = './public/imgs/wrench.png';
+const formaturaImg = './public/imgs/formatura.png';
 
-// Color mapping for dots
+// Color mapping
 const LEDS = ['#f0a9bf', '#8ec5ff', '#7ef0c3'];
 
-// Panel data - using icons since site screenshots not available
-const panels = [
+// Card data
+const cards = [
   {
     icon: paletaImg,
-    tag: 'Kits',
     title: 'Kits de Manicure Completos',
-    desc: 'Tudo que você precisa em um único kit',
+    desc1: 'Tudo que você precisa em um único kit',
+    desc2: 'Materiais profissionais de qualidade',
     color: 'var(--rose)',
-    detail: 'Materiais profissionais de qualidade',
+    video: './public/videos/kits.mp4',
   },
   {
     icon: wrenchImg,
-    tag: 'Peças',
     title: 'Peças Avulsas',
-    desc: 'Montagem do seu kit à sua medida',
+    desc1: 'Produtos individuais para montar seu kit',
+    desc2: 'Flexibilidade no que você quer comprar',
     color: 'var(--blue)',
-    detail: 'Flexibilidade total na escolha',
+    video: './public/videos/pecas.mp4',
   },
   {
     icon: formaturaImg,
-    tag: 'Curso',
     title: 'Curso Preparatório',
-    desc: '23 aulas com técnicas de especialistas',
+    desc1: '23 aulas com técnicas de especialistas',
+    desc2: 'Do básico ao avançado, com aulas bônus',
     color: 'var(--mint)',
-    detail: 'Do básico ao avançado',
+    video: './public/videos/curso.mp4',
   },
 ];
 
-function S3() {
-  const [activePanel, setActivePanel] = useState(0);
+interface S3Props {
+  openVideo?: number;
+  setOpenVideo?: (index: number | null) => void;
+}
+
+function S3({ openVideo, setOpenVideo }: S3Props) {
+  const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+
+  const handleCardClick = (index: number) => {
+    setOpenVideo?.(index);
+  };
+
+  const handleClose = () => {
+    setOpenVideo?.(null);
+  };
+
+  const handleVideoClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRefs.current[openVideo ?? 0];
+    if (video) {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleClose();
+    } else if (e.key === 'ArrowLeft' && openVideo! > 0) {
+      setOpenVideo?.(openVideo! - 1);
+    } else if (e.key === 'ArrowRight' && openVideo! < cards.length - 1) {
+      setOpenVideo?.(openVideo! + 1);
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      handleVideoClick(e as any);
+    }
+  };
+
+  useEffect(() => {
+    if (openVideo !== null) {
+      const video = videoRefs.current[openVideo];
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    }
+  }, [openVideo, videoRefs]);
 
   return (
     <>
       <Eyebrow>O que é o Esmalt'up</Eyebrow>
       <H2>
-        Três programas <em>integrados</em>
+        Três programas <em style={{ color: 'var(--rose)' }}>integrados</em>
       </H2>
 
-      {/* Three panels with perspective */}
+      {/* Three glass cards */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: 30,
-          height: 400,
-          perspective: 1200,
+          gap: 24,
+          marginTop: 40,
         }}
       >
-        {panels.map((panel, index) => {
-          const isActive = activePanel === index;
-          const isNear = Math.abs(activePanel - index) <= 1;
-
-          return (
+        {cards.map((card, index) => (
+          <Tilt key={card.title} ledColor={card.color}>
             <motion.div
-              key={panel.title}
+              className="glass"
               style={{
-                flex: isActive ? 1.3 : 0.8,
+                width: 340,
+                height: 340,
+                padding: 28,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                textAlign: 'center',
                 cursor: 'pointer',
-                transformStyle: 'preserve-3d',
-                rotateY: isActive ? 0 : (activePanel > index ? -15 : 15) * Math.abs(activePanel - index),
-                scale: isActive ? 1 : 0.9,
-                opacity: isNear || isActive ? 1 : 0.7,
-                transition: { type: 'spring', stiffness: 120, damping: 15 },
+                border: `1px solid ${card.color}33`,
               }}
-              onClick={() => setActivePanel(index)}
+              whileHover={{ scale: 1.03 }}
+              onClick={() => handleCardClick(index)}
             >
-              {/* Panel container - mimicking browser screen */}
-              <div
-                className="glass"
-                style={{
-                  width: '100%',
-                  maxWidth: 300,
-                  aspectRatio: '16/9',
-                  borderRadius: 12,
-                  padding: 20,
-                  textAlign: 'left',
-                  boxShadow: `0 20px 40px -10px ${panel.color}33`,
-                  border: `1px solid ${panel.color}33`,
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                }}
-                whileHover={{ scale: 1.02 }}
-              >
-                {/* Browser-like header */}
-                <div style={{
-                  display: 'flex',
-                  gap: 8,
-                  alignItems: 'center',
-                  marginBottom: 16,
-                  paddingBottom: 12,
-                  borderBottom: '1px solid rgba(255,255,255,0.1)',
-                }}>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(255,0,0,0.4)' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(255,165,0,0.4)' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(0,128,0,0.4)' }} />
-                  </div>
-                  <motion.span
-                    className="led"
-                    style={{ '--c': panel.color }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  />
-                </div>
-
-                {/* Icon with glow effect */}
-                <motion.div
-                  style={{
-                    width: 60,
-                    height: 60,
-                    marginBottom: 16,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <img
-                    src={panel.icon}
-                    alt={panel.tag}
-                    style={{
-                      width: 48,
-                      height: 48,
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
-                    }}
-                  />
-                </motion.div>
-
-                {/* Title */}
-                <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{panel.tag}</h3>
-                <p style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.4 }}>{panel.desc}</p>
-
-                {/* Detail - only visible when active */}
-                <motion.p
-                  style={{ fontSize: 13, color: panel.color, marginTop: 12 }}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: isActive ? 20 : 0, opacity: isActive ? 1 : 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {panel.detail}
-                </motion.p>
+              {/* Browser-like header dots */}
+              <div style={{
+                display: 'flex',
+                gap: 6,
+                marginBottom: 20,
+                alignSelf: 'flex-start',
+              }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(255,0,0,0.4)' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(255,165,0,0.4)' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(0,128,0,0.4)' }} />
               </div>
 
-              {/* Tag */}
-              <motion.span
-                className="tag"
-                style={{ marginTop: 12, display: 'flex', gap: 6 }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+              {/* Icon */}
+              <img
+                src={card.icon}
+                alt={card.title}
+                style={{
+                  width: 72,
+                  height: 72,
+                  objectFit: 'contain',
+                  marginBottom: 20,
+                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
+                }}
+              />
+
+              {/* Title */}
+              <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: card.color }}>
+                {card.title}
+              </h3>
+
+              {/* Description with dots */}
+              <div style={{ fontSize: 18, lineHeight: 1.6, color: 'var(--text)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 8 }}>
+                  <span style={{ color: card.color, marginTop: 6 }}>•</span>
+                  <span>{card.desc1}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <span style={{ color: card.color, marginTop: 6 }}>•</span>
+                  <span>{card.desc2}</span>
+                </div>
+              </div>
+
+              {/* View button */}
+              <motion.button
+                className="glass"
+                style={{
+                  marginTop: 'auto',
+                  padding: '8px 16px',
+                  fontSize: 14,
+                  border: `1px solid ${card.color}`,
+                  color: card.color,
+                  background: 'transparent',
+                  cursor: 'pointer',
+                }}
+                whileHover={{ scale: 1.05 }}
               >
-                <Led c={panel.color} />
-                {panel.tag}
-              </motion.span>
+                ▶ Ver no site
+              </motion.button>
             </motion.div>
-          );
-        })}
+          </Tilt>
+        ))}
       </div>
 
-      {/* Navigation dots */}
-      <motion.div
-        className="row"
-        style={{ justifyContent: 'center', marginTop: 24 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {panels.map((_, i) => (
-          <motion.button
-            key={i}
-            className="dot"
-            onClick={() => setActivePanel(i)}
-            animate={{
-              background: i === activePanel ? LEDS[i] : 'rgba(255, 255, 255, 0.2)',
-              scale: i === activePanel ? 1.5 : 1,
+      {/* Video Pop-up */}
+      <AnimatePresence>
+        {openVideo !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleClose}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
             }}
-            style={{ margin: '0 8px' }}
-          />
-        ))}
-      </motion.div>
+          >
+            <motion.div
+              layoutId={`card-${openVideo}`}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass"
+              style={{
+                width: 960,
+                height: 580,
+                display: 'flex',
+                borderRadius: 16,
+                overflow: 'hidden',
+                border: '1px solid rgba(255,255,255,0.2)',
+              }}
+            >
+              {/* Left menu */}
+              <div style={{
+                width: 200,
+                background: 'rgba(0,0,0,0.3)',
+                padding: 20,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 12,
+              }}>
+                {cards.map((card, i) => (
+                  <motion.button
+                    key={i}
+                    onClick={() => setOpenVideo?.(i)}
+                    style={{
+                      padding: 12,
+                      background: openVideo === i ? card.color : 'rgba(255,255,255,0.05)',
+                      border: 'none',
+                      borderRadius: 8,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 12,
+                      color: openVideo === i ? '#fff' : 'var(--text)',
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <img
+                      src={card.icon}
+                      alt={card.title}
+                      style={{ width: 32, height: 32, objectFit: 'contain' }}
+                    />
+                    <span style={{ fontSize: 14, fontWeight: 600 }}>{card.title.split(' ')[0]}</span>
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Right video area */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 20 }}>
+                {/* Browser header */}
+                <div style={{
+                  display: 'flex',
+                  gap: 6,
+                  marginBottom: 12,
+                  paddingBottom: 8,
+                  borderBottom: '1px solid rgba(255,255,255,0.1)',
+                }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.3)' }} />
+                </div>
+
+                {/* Video */}
+                <div style={{ flex: 1, background: '#000', borderRadius: 8, overflow: 'hidden', position: 'relative' }}>
+                  <video
+                    ref={(el) => { if (openVideo !== null) videoRefs.current[openVideo] = el; }}
+                    src={cards[openVideo!].video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    onClick={handleVideoClick}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                    }}
+                    onError={(e) => {
+                      const video = e.target as HTMLVideoElement;
+                      video.style.display = 'none';
+                      const fallback = video.nextElementSibling as HTMLDivElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                  {/* Fallback if video doesn't exist */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'none',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--muted)',
+                    fontSize: 18,
+                  }}>
+                    Vídeo em breve
+                  </div>
+                </div>
+
+                {/* Caption */}
+                <div style={{ marginTop: 12, fontSize: 16, color: 'var(--text)' }}>
+                  {cards[openVideo!].title}
+                </div>
+
+                {/* Close button */}
+                <button
+                  onClick={handleClose}
+                  style={{
+                    position: 'absolute',
+                    top: 16,
+                    right: 16,
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.1)',
+                    border: 'none',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    fontSize: 20,
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

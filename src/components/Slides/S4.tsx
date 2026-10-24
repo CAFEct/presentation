@@ -2,11 +2,12 @@ import { motion } from 'framer-motion';
 import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
 import { useState } from 'react';
+import FloatingIcons from '../FloatingIcons';
 
 // Image paths from public folder
-const certificateImg = '/imgs/certificate.png';
-const qualityImg = '/imgs/vscod.png';
-const priceImg = '/imgs/money.png';
+const certificateImg = './public/imgs/certificate.png';
+const qualityImg = './public/imgs/vscod.png';
+const priceImg = './public/imgs/money.png';
 
 function S4() {
   const [selectedKit, setSelectedKit] = useState(0);
@@ -180,6 +181,20 @@ function S4() {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Floating icons */}
+      <FloatingIcons
+        icons={[
+          { src: priceImg, alt: 'Price', size: 48 },
+          { src: certificateImg, alt: 'Quality', size: 52 },
+          { src: qualityImg, alt: 'Code', size: 56 },
+        ]}
+        positions={[
+          { top: 100, left: 50 },
+          { top: 80, right: 60 },
+          { bottom: 120, left: 80 },
+        ]}
+      />
     </>
   );
 }

@@ -2,14 +2,15 @@ import { motion } from 'framer-motion';
 import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
 import ImageIcon from '../ImageIcon';
+import FloatingIcons from '../FloatingIcons';
 
 // Image paths
-const worldImg = '/imgs/world.png';
-const cameraImg = '/imgs/camera.png';
-const nailImg = '/imgs/trofeu.png'; // Using trophy as nail art icon
-const checkImg = '/imgs/check.png';
-const trophyImg = '/imgs/trofeu.png';
-const rocketImg = '/imgs/rocket.png';
+const worldImg = './public/imgs/world.png';
+const cameraImg = './public/imgs/camera.png';
+const nailImg = './public/imgs/trofeu.png'; // Using trophy as nail art icon
+const checkImg = './public/imgs/check.png';
+const trophyImg = './public/imgs/trofeu.png';
+const rocketImg = './public/imgs/rocket.png';
 
 function S7() {
   const st = [
@@ -83,6 +84,20 @@ function S7() {
           ))}
         </div>
       </div>
+
+      {/* Floating icons */}
+      <FloatingIcons
+        icons={[
+          { src: checkImg, alt: 'Complete', size: 44 },
+          { src: rocketImg, alt: 'Start', size: 48 },
+          { src: trophyImg, alt: 'Success', size: 52 },
+        ]}
+        positions={[
+          { top: 70, left: 55 },
+          { top: 100, right: 65 },
+          { bottom: 110, left: 85 },
+        ]}
+      />
     </>
   );
 }

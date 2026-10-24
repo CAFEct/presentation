@@ -3,14 +3,21 @@ import Eyebrow, { Led } from '../Eyebrow';
 import Tilt from '../Tilt';
 import Counter from '../Counter';
 
+// Image paths
+const modIcon = './public/imgs/formatura.png';
+const courseImg = './public/imgs/camera.png';
+
 function S5() {
   const mods = [
-    ['Unha e Segurança', 6, 'Materiais essenciais e biossegurança', 'var(--rose)'],
-    ['Cutilagem e Esmaltação', 5, 'Mãos e pés perfeitos', 'var(--blue)'],
-    ['Nail Art', 4, 'Decoração e francesinha', 'var(--mint)'],
-    ['Unhas de Gel', 4, 'Uma técnica premium', 'var(--gold)'],
-    ['Sua Carreira', 4, 'Como montar sua agenda', 'var(--red)'],
+    { num: 6, title: 'Unha e Segurança', desc: 'Materiais essenciais e biossegurança', color: 'var(--rose)' },
+    { num: 5, title: 'Cutilagem e Esmaltação', desc: 'Mãos e pés perfeitos', color: 'var(--blue)' },
+    { num: 4, title: 'Nail Art', desc: 'Decoração e francesinha', color: 'var(--mint)' },
+    { num: 4, title: 'Unhas de Gel', desc: 'Uma técnica premium', color: 'var(--gold)' },
+    { num: 4, title: 'Sua Carreira', desc: 'Como montar sua agenda', color: 'var(--red)' },
   ];
+
+  // Total lessons
+  const totalLessons = mods.reduce((sum, m) => sum + m.num, 0);
 
   return (
     <>
@@ -18,63 +25,141 @@ function S5() {
       <motion.h2
         variants="item"
         style={{
-          fontSize: 42,
-          fontWeight: 700,
-          lineHeight: 1.12,
+          fontSize: 48,
+          fontWeight: 800,
+          lineHeight: 1.1,
           marginBottom: 24,
         }}
       >
         Aprenda com as <em>melhores profissionais</em>
       </motion.h2>
-      <div className="grid c5" style={{ height: 240 }}>
-        {mods.map(([t, n, d, c], i) => (
-          <Tilt key={t} ledColor={c}>
-            <div className="big" style={{ fontSize: 48, color: c, textShadow: 'none' }}>
-              {n}
+
+      {/* Course pathway visualization */}
+      <div
+        style={{
+          position: 'relative',
+          height: 280,
+          marginBottom: 30,
+          padding: '0 40px',
+        }}
+      >
+        {/* Path line */}
+        <svg
+          viewBox="0 0 100 30"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            overflow: 'visible',
+          }}
+        >
+          <path
+            d="M 10 20 C 30 5, 70 5, 90 20"
+            fill="none"
+            stroke="rgba(240, 169, 191, 0.3)"
+            strokeWidth="2"
+          />
+          {/* Nodes */}
+          {mods.map((mod, i) => (
+            <g key={mod.title}>
+              <circle
+                cx={10 + i * 20}
+                cy={20}
+                r="8"
+                fill={mod.color}
+                stroke="#fff"
+                strokeWidth="2"
+              />
+              <circle
+                cx={10 + i * 20}
+                cy={20}
+                r="4"
+                fill="#fff"
+              />
+            </g>
+          ))}
+        </svg>
+
+        {/* Animated logo traveling along path */}
+        <motion.div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '10%',
+            transform: 'translate(-50%, -50%)',
+            rotate: 0,
+          }}
+          animate={{
+            x: [0, 80],
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'linear',
+            delay: 1,
+          }}
+        >
+          <img
+            src={modIcon}
+            alt="Logo"
+            style={{
+              width: 40,
+              height: 40,
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
+            }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Module cards */}
+      <div className="grid c5" style={{ height: 220, gap: 16 }}>
+        {mods.map((mod, i) => (
+          <Tilt key={mod.title} ledColor={mod.color}>
+            <div style={{ textAlign: 'center' }}>
+              <motion.div
+                className="glass"
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: '50%',
+                  display: 'grid',
+                  placeItems: 'center',
+                  marginBottom: 12,
+                }}
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              >
+                <span style={{ fontSize: 24, fontWeight: 700, color: mod.color }}>{mod.num}</span>
+              </motion.div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4 }}>{mod.title}</h3>
+              <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.3 }}>{mod.desc}</p>
             </div>
-            <small style={{ color: 'var(--muted)' }}>aulas</small>
-            <h3>{t}</h3>
-            <p>{d}</p>
           </Tilt>
         ))}
       </div>
+
+      {/* Stats */}
       <motion.div
-        variants="item"
-        style={{ display: 'flex', gap: 6, margin: '20px 0 10px' }}
-      >
-        {mods
-          .flatMap(([, n, , c]) => Array.from({ length: n }, (_, k) => c))
-          .map((c, i) => (
-            <motion.div
-              key={i}
-              initial={{ scaleY: 0, opacity: 0 }}
-              animate={{ scaleY: 1, opacity: 1 }}
-              transition={{ delay: 0.9 + i * 0.05 }}
-              style={{
-                flex: 1,
-                height: 10,
-                borderRadius: 3,
-                background: c,
-                opacity: 0.85,
-              }}
-            />
-          ))}
-      </motion.div>
-      <motion.div
-        variants="item"
         className="row"
-        style={{ justifyContent: 'space-between' }}
+        style={{ justifyContent: 'center', marginTop: 24 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
       >
-        <span style={{ fontSize: 20 }}>
-          <b className="neon" style={{ color: 'var(--rose)', fontSize: 30 }}>
-            <Counter to={23} />
+        <span style={{ fontSize: 28 }}>
+          <b className="neon" style={{ color: 'var(--rose)', fontSize: 36 }}>
+            <Counter to={totalLessons} />
           </b>{' '}
           aulas em vídeo + certificado
         </span>
-        <span style={{ fontSize: 14, color: 'var(--muted)' }}>
-          4–6 semanas · no seu ritmo · comunidade exclusiva
-        </span>
       </motion.div>
+
+      <motion.p variants="item" style={{ marginTop: 16, fontSize: 16, color: 'var(--muted)' }}>
+        4–6 semanas · no seu ritmo · comunidade exclusiva
+      </motion.p>
     </>
   );
 }

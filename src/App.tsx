@@ -63,6 +63,8 @@ const shell = {
 function App() {
   const [[idx, dir], setPage] = useState<[number, number]>([0, 1]);
   const [scale, setScale] = useState(1);
+  const [slide2Toggle, setSlide2Toggle] = useState(false);
+  const [slide3Video, setSlide3Video] = useState<number | null>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
@@ -72,13 +74,29 @@ function App() {
   const go = (n: number) =>
     setPage(([i]) => {
       const x = Math.max(0, Math.min(SLIDES.length - 1, n));
+      setSlide2Toggle(false);
+      setSlide3Video(null);
       return [x, x >= i ? 1 : -1];
     });
 
   const step = (d: number) =>
     setPage(([i]) => {
+      // If video pop-up is open on slide 3, don't navigate
+      if (i === 2 && slide3Video !== null) {
+        return [i, d];
+      }
       const x = Math.max(0, Math.min(SLIDES.length - 1, i + d));
-      return x === i ? [i, d] : [x, d];
+      if (x === i) {
+        // Special case for slide 2: toggle between chaos and organized
+        if (i === 1 && d === 1) {
+          setSlide2Toggle(!slide2Toggle);
+          return [i, d];
+        }
+        return [i, d];
+      }
+      setSlide2Toggle(false);
+      setSlide3Video(null);
+      return [x, d];
     });
 
   useEffect(() => {
@@ -91,6 +109,22 @@ function App() {
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
       const key = e.key;
+      // If video pop-up is open, handle special keys
+      if (slide3Video !== null) {
+        if (key === 'Escape') {
+          setSlide3Video(null);
+          return;
+        }
+        if (key === 'ArrowLeft' && slide3Video > 0) {
+          setSlide3Video(slide3Video - 1);
+          return;
+        }
+        if (key === 'ArrowRight' && slide3Video < 2) {
+          setSlide3Video(slide3Video + 1);
+          return;
+        }
+        return; // Don't handle navigation when video is open
+      }
       if (key === 'f' || key === 'F') {
         document.fullScreenElement
           ? (document as any).exitFullscreen()
@@ -110,10 +144,14 @@ function App() {
         go(0);
       else if (key === 'End')
         go(9);
+      else if (idx === 2 && ['1', '2', '3'].includes(key)) {
+        // Open videos 1, 2, 3 on slide 3
+        setSlide3Video(parseInt(key) - 1);
+      }
     };
     addEventListener('keydown', k);
     return () => removeEventListener('keydown', k);
-  }, [go, step]);
+  }, [go, step, slide2Toggle, slide3Video, idx]);
 
   useEffect(() => {
     const m = (e: MouseEvent) => {
@@ -241,13 +279,20 @@ function App() {
           animate="center"
           exit="exit"
         >
-          <Cur />
+          {idx === 1 ? (
+            <Cur toggle={slide2Toggle} setToggle={setSlide2Toggle} />
+          ) : idx === 2 ? (
+            <Cur openVideo={slide3Video} setOpenVideo={setSlide3Video} />
+          ) : (
+            <Cur />
+          )}
         </motion.div>
       </AnimatePresence>
 
       <div className="hud">
         <span style={{ opacity: 0.7 }}>
           F tela cheia · espaço / setas para navegar
+          {idx === 2 && ' · 1/2/3 para vídeos'}
         </span>
         <div className="nav">
           <button className="arrow" onClick={() => step(-1)}>

@@ -2,14 +2,15 @@ import { motion } from 'framer-motion';
 import Eyebrow from '../Eyebrow';
 import Tilt from '../Tilt';
 import ImageIcon from '../ImageIcon';
+import FloatingIcons from '../FloatingIcons';
 
 // Image paths
-const sparkleImg = '/imgs/trofeu.png'; // Sparkle-like effect
-const qualityImg = '/imgs/vscod.png'; // Quality badge
-const targetImg = '/imgs/brauin.png'; // Target/aim (Brazil flag style)
-const moneyImg = '/imgs/money.png';
-const certImg = '/imgs/formatura.png';
-const deliveryImg = '/imgs/world.png';
+const sparkleImg = './public/imgs/trofeu.png'; // Sparkle-like effect
+const qualityImg = './public/imgs/vscod.png'; // Quality badge
+const targetImg = './public/imgs/brauin.png'; // Target/aim (Brazil flag style)
+const moneyImg = './public/imgs/money.png';
+const certImg = './public/imgs/formatura.png';
+const deliveryImg = './public/imgs/world.png';
 
 function S9() {
   const w = [
