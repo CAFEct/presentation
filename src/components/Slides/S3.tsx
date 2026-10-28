@@ -445,7 +445,7 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
           --ink: #f0f0f0; --muted: #a89ba2; --pink: #f0a9bf;
           --line: rgba(240,169,191,.2); --glass: rgba(255,255,255,.06); --glass-2: rgba(255,255,255,.1);
           --ease: cubic-bezier(.22,1,.36,1);
-          position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; padding: 6px 6px 8px; color: var(--ink); background: transparent;
+          position: absolute; inset: var(--slot-top, 16px) var(--slot-x, 76px) var(--slot-bottom, 60px); display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 6px; color: var(--ink); background: transparent;
         }
         .esmalt-section button { font: inherit; cursor: pointer; }
         .esmalt-section button:focus-visible { outline: 2px solid var(--card-accent, var(--pink)); outline-offset: 3px; }
@@ -561,12 +561,12 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
 
         /* Modal */
         .esmalt-backdrop {
-          position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 22px;
+          position: fixed; inset: 0; z-index: 1000; display: grid; grid-template-rows: minmax(0, 1fr); place-items: center; padding: 22px;
           overflow-y: auto; background: radial-gradient(circle at 50% 40%, rgba(40,20,32,.82), rgba(0,0,0,.92));
           backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         }
         .esmalt-modal {
-          position: relative; isolation: isolate; display: flex; flex-direction: column; width: min(980px,100%); max-height: min(720px, calc(100dvh - 44px));
+          position: relative; isolation: isolate; display: flex; flex-direction: column; width: min(980px,100%); max-height: min(680px, 100%);
           overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 24px;
           background: linear-gradient(160deg, rgba(34,20,30,.9), rgba(14,9,13,.94));
           backdrop-filter: blur(24px) saturate(1.3);
@@ -619,35 +619,7 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         .esmalt-progress-seg { height: 3px; overflow: hidden; border-radius: 3px; background: rgba(255,255,255,.1); }
         .esmalt-progress-fill { display: block; width: 100%; height: 100%; transform-origin: left; border-radius: 3px; }
 
-        /* Responsivo */
-        @media (max-width: 900px) {
-          .esmalt-section { height: auto; }
-          .esmalt-grid { flex: none; grid-template-rows: none; grid-template-columns: repeat(2, minmax(0,1fr)); }
-          .esmalt-preview { flex: 0 0 auto; min-height: 150px; }
-          .esmalt-cell:last-child { grid-column: 1 / -1; width: calc(50% - 11px); justify-self: center; }
-          }
-        @media (max-width: 620px) {
-          .esmalt-heading { margin-bottom: 24px; }
-          .esmalt-intro { font-size: 14px; }
-          .esmalt-grid { grid-template-columns: minmax(0,1fr); gap: 16px; }
-          .esmalt-cell:last-child { grid-column: auto; width: auto; }
-          .esmalt-card { border-radius: 18px; }
-          .esmalt-preview { min-height: 160px; }
-          .esmalt-orb { opacity: .3; }
-          .esmalt-backdrop { align-items: start; padding: 10px; }
-          .esmalt-modal { max-height: calc(100dvh - 20px); border-radius: 18px; }
-          .esmalt-modal-header { padding: 14px; }
-          .esmalt-modal-header h3 { font-size: 14px; }
-          .esmalt-modal-body { grid-template-columns: minmax(0,1fr); }
-          .esmalt-nav { order: 2; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; padding: 10px; border-top: 1px solid var(--line); border-right: 0; }
-          .esmalt-nav-item { display: flex; flex-direction: column; justify-content: flex-start; gap: 6px; padding: 9px 5px; text-align: center; font-size: 10px; }
-          .esmalt-nav-item:hover { transform: none; }
-          .esmalt-player-col { padding: 12px; }
-          .esmalt-player { aspect-ratio: 4/3; }
-          .esmalt-caption { flex-direction: column; align-items: flex-start; gap: 14px; }
-          .esmalt-controls { align-self: flex-end; }
-          .esmalt-hint { display: none; }
-        }
+        /* Sem media queries de largura: o palco é sempre 1280x720 (escalado pelo App). */
         @media (hover: none) {
           .esmalt-glare { display: none; }
         }
