@@ -4,7 +4,7 @@ import { Lead } from '../Typography';
 import { useEffect, useState } from 'react';
 
 // Nail logo image
-const nailLogoImg = './public/imgs/sem_background.png';
+const nailLogoImg = '/imgs/sem_background.png';
 
 const item = {
   enter: { opacity: 0, y: 46, rotateX: -28, scale: 0.94 },

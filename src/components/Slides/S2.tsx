@@ -11,7 +11,7 @@ import Eyebrow from '../Eyebrow';
 /*  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet"> */
 /* ------------------------------------------------------------------ */
 
-const IMG = './public/imgs';
+const IMG = '/imgs';
 const worldImg = `${IMG}/world.png`;
 const moneyImg = `${IMG}/money.png`;
 const formaturaImg = `${IMG}/formatura.png`;

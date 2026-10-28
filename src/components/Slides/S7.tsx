@@ -5,13 +5,13 @@ import ImageIcon from '../ImageIcon';
 import FloatingIcons from '../FloatingIcons';
 
 // Image paths
-const worldImg = './public/imgs/world.png';
-const cameraImg = './public/imgs/camera.png';
-const nailImg = './public/imgs/trofeu.png'; // Using trophy as nail art icon
-const checkImg = './public/imgs/check.png';
-const trophyImg = './public/imgs/trofeu.png';
-const rocketImg = './public/imgs/rocket.png';
-const targetImg = './public/imgs/target.png'; // Target/practice icon
+const worldImg = '/imgs/world.png';
+const cameraImg = '/imgs/camera.png';
+const nailImg = '/imgs/trofeu.png'; // Using trophy as nail art icon
+const checkImg = '/imgs/check.png';
+const trophyImg = '/imgs/trofeu.png';
+const rocketImg = '/imgs/rocket.png';
+const targetImg = '/imgs/target.png'; // Target/practice icon
 
 function S7() {
   const st = [

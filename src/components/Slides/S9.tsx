@@ -5,12 +5,12 @@ import ImageIcon from '../ImageIcon';
 import FloatingIcons from '../FloatingIcons';
 
 // Image paths
-const sparkleImg = './public/imgs/trofeu.png'; // Sparkle-like effect
-const crownImg = './public/imgs/crown.png'; // Crown as quality/badge hero visual
-const targetImg = './public/imgs/brauin.png'; // Target/aim (Brazil flag style)
-const moneyImg = './public/imgs/money.png';
-const certImg = './public/imgs/formatura.png';
-const deliveryImg = './public/imgs/world.png';
+const sparkleImg = '/imgs/trofeu.png'; // Sparkle-like effect
+const crownImg = '/imgs/crown.png'; // Crown as quality/badge hero visual
+const targetImg = '/imgs/brauin.png'; // Target/aim (Brazil flag style)
+const moneyImg = '/imgs/money.png';
+const certImg = '/imgs/formatura.png';
+const deliveryImg = '/imgs/world.png';
 
 function S9() {
   const w = [
