@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 import {
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
@@ -107,7 +108,6 @@ function StepCard({ step, index, active, onSelect }: CardProps) {
       aria-expanded={active}
       onClick={onSelect}
       onFocus={onSelect}
-      onPointerEnter={(e) => e.pointerType === 'mouse' && onSelect()}
       onPointerMove={onMove}
       onPointerLeave={reset}
       style={{
@@ -182,6 +182,17 @@ function S5() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const current = steps[active];
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearHover = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+  };
+  const hoverSelect = (i: number) => (e: ReactPointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    clearHover();
+    hoverTimer.current = setTimeout(() => setActive(i), 70);
+  };
+  useEffect(() => clearHover, []);
 
   // A jornada se mostra sozinha; pausa quando a pessoa interage.
   useEffect(() => {
@@ -228,11 +239,13 @@ function S5() {
               key={step.title}
               className={`s5-col${on ? ' is-active' : ''}${done ? ' is-done' : ''}`}
               style={tint(step.color)}
+              onPointerEnter={hoverSelect(i)}
+              onPointerLeave={clearHover}
               initial={reduced ? false : { opacity: 0, y: 46, rotateX: 22, transformPerspective: 1200 }}
               animate={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ type: 'spring', stiffness: 70, damping: 16, delay: 0.25 + i * 0.09 }}
             >
-              <div className="s5-node-row">
+              <div className="s5-node-row" onClick={() => setActive(i)}>
                 <motion.span
                   className="s5-orb"
                   aria-hidden="true"
@@ -292,7 +305,7 @@ function S5() {
           --s5-ease: cubic-bezier(.22,1,.36,1);
           position: absolute; inset: var(--slot-top, 16px) var(--slot-x, 76px) var(--slot-bottom, 60px);
           isolation: isolate; display: flex; flex-direction: column; justify-content: center; gap: 14px; min-height: 0;
-          color: var(--s5-ink); overflow: hidden;
+          color: var(--s5-ink); overflow: visible;
         }
         .s5-section button { font: inherit; cursor: pointer; }
         .s5-section button:focus-visible { outline: 2px solid var(--c, #f0a9bf); outline-offset: 4px; }
@@ -310,11 +323,11 @@ function S5() {
         .s5-heading > p { margin: 0 auto; max-width: 560px; color: var(--s5-muted); font-size: 15px; line-height: 1.55; }
 
         /* Caminho */
-        .s5-track { flex: 0 1 372px; min-height: 0; display: flex; gap: 10px; }
+        .s5-track { flex: 0 1 372px; min-height: 0; display: flex; gap: 10px; padding: 10px 14px 0; }
         .s5-col { display: flex; flex: 1 1 0; min-width: 0; min-height: 0; flex-direction: column; gap: 10px; transition: flex-grow .8s var(--s5-ease); }
         .s5-col.is-active { flex-grow: 3.2; }
 
-        .s5-node-row { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; height: 50px; padding-left: 2px; }
+        .s5-node-row { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; height: 50px; padding-left: 2px; cursor: pointer; }
         .s5-orb {
           position: relative; display: grid; flex: 0 0 46px; place-items: center; width: 46px; height: 46px; border-radius: 50%;
           color: #fff; font-size: 17px; font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,.45);
