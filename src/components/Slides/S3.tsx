@@ -445,7 +445,7 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
           --ink: #f0f0f0; --muted: #a89ba2; --pink: #f0a9bf;
           --line: rgba(240,169,191,.2); --glass: rgba(255,255,255,.06); --glass-2: rgba(255,255,255,.1);
           --ease: cubic-bezier(.22,1,.36,1);
-          position: relative; overflow: hidden; padding: 12px 6px 20px; color: var(--ink); background: transparent;
+          position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; padding: 6px 6px 8px; color: var(--ink); background: transparent;
         }
         .esmalt-section button { font: inherit; cursor: pointer; }
         .esmalt-section button:focus-visible { outline: 2px solid var(--card-accent, var(--pink)); outline-offset: 3px; }
@@ -458,8 +458,8 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         @keyframes esmalt-drift { to { transform: translate3d(48px, 36px, 0) scale(1.15); } }
 
         /* Cabeçalho */
-        .esmalt-heading { position: relative; z-index: 1; max-width: 900px; margin: 0 auto 36px; text-align: center; }
-        .esmalt-heading h2 { margin: 12px 0 14px; line-height: 1.12; letter-spacing: -.04em; }
+        .esmalt-heading { position: relative; z-index: 1; flex: 0 0 auto; max-width: 900px; margin: 0 auto 18px; text-align: center; }
+        .esmalt-heading h2 { margin: 8px 0 8px; line-height: 1.12; letter-spacing: -.04em; }
         .esmalt-highlight {
           font-style: normal; color: var(--pink);
           background: linear-gradient(100deg, #ffd0de 10%, #f0a9bf 40%, #d9708f 60%, #ffd0de 90%);
@@ -470,10 +470,10 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         .esmalt-intro { max-width: 600px; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.6; }
 
         /* Cards */
-        .esmalt-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
-        .esmalt-cell { display: flex; min-width: 0; }
+        .esmalt-grid { position: relative; z-index: 1; flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); grid-template-rows: minmax(0,1fr); gap: 18px; }
+        .esmalt-cell { display: flex; min-width: 0; min-height: 0; }
         .esmalt-card {
-          position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 12px; overflow: hidden;
+          position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; padding: 10px; overflow: hidden;
           border: 1px solid rgba(255,255,255,.14); border-radius: 22px;
           background: linear-gradient(155deg, rgba(255,255,255,.11), rgba(255,255,255,.03) 55%, rgba(255,255,255,.05));
           backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
@@ -497,7 +497,8 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         .esmalt-card:hover .esmalt-glare { opacity: 1; }
 
         .esmalt-preview {
-          position: relative; isolation: isolate; display: grid; place-items: center; min-height: 164px;
+          position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+          flex: 1 1 0; min-height: 104px; container-type: size; padding: 8px 10px 10px;
           overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; background: rgba(0,0,0,.18);
         }
         .esmalt-aura {
@@ -506,20 +507,20 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
           opacity: .55; transition: opacity .4s, transform .6s var(--ease);
         }
         .esmalt-card:hover .esmalt-aura { opacity: 1; transform: scale(1.2); }
-        .esmalt-rings { position: absolute; z-index: -1; width: 170px; height: 170px; border: 1px solid rgba(240,169,191,.2); border-radius: 50%; }
+        .esmalt-rings { position: absolute; z-index: -1; width: 170px; height: 170px; width: min(170px, 92cqh); height: min(170px, 92cqh); border: 1px solid rgba(240,169,191,.2); border-radius: 50%; }
         .esmalt-rings::after { content: ''; position: absolute; inset: 28px; border: 1px solid rgba(240,169,191,.18); border-radius: 50%; }
         .esmalt-icon-wrap { display: grid; place-items: center; }
         .esmalt-icon {
-          position: relative; display: grid; place-items: center; width: 94px; height: 94px; border-radius: 26px;
+          position: relative; display: grid; place-items: center; width: 76px; height: 76px; width: clamp(48px, calc(100cqh - 58px), 92px); height: clamp(48px, calc(100cqh - 58px), 92px); border-radius: 26%;
           background: linear-gradient(150deg, rgba(255,255,255,.28), rgba(255,255,255,.06));
           border: 1px solid rgba(255,255,255,.25);
           box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 14px 28px rgba(0,0,0,.3), 0 24px 40px -10px color-mix(in srgb, var(--card-accent) 60%, transparent);
           backdrop-filter: blur(8px);
         }
-        .esmalt-icon img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 8px 8px rgba(0,0,0,.35)); }
+        .esmalt-icon img { width: 62%; height: 62%; object-fit: contain; filter: drop-shadow(0 8px 8px rgba(0,0,0,.35)); }
         .esmalt-play {
-          position: absolute; bottom: 10px; left: 10px; display: inline-flex; align-items: center; gap: 7px;
-          padding: 5px 12px 5px 5px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+          position: relative; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px;
+          padding: 3px 12px 3px 3px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
           background: rgba(255,255,255,.14); backdrop-filter: blur(14px); color: var(--ink); font-size: 10px; font-weight: 700;
           transition: transform .35s var(--ease), background .3s;
         }
@@ -529,11 +530,11 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         .esmalt-play-dot svg { width: 13px; height: 13px; }
         @keyframes esmalt-ping { from { transform: scale(1); opacity: .7; } to { transform: scale(2); opacity: 0; } }
 
-        .esmalt-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 16px 8px 8px; }
-        .esmalt-eyebrow { margin-bottom: 8px; color: var(--card-accent); font-size: 10px; font-weight: 800; letter-spacing: .12em; filter: brightness(1.25); }
-        .esmalt-body h3 { margin: 0 0 8px; color: #fff; font-size: 17px; line-height: 1.3; letter-spacing: -.025em; }
-        .esmalt-description { min-height: 40px; margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.45; }
-        .esmalt-benefits { display: grid; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
+        .esmalt-body { display: flex; flex: 0 0 auto; flex-direction: column; align-items: flex-start; padding: 12px 8px 2px; }
+        .esmalt-eyebrow { margin-bottom: 5px; color: var(--card-accent); font-size: 10px; font-weight: 800; letter-spacing: .12em; filter: brightness(1.25); }
+        .esmalt-body h3 { margin: 0 0 5px; color: #fff; font-size: 17px; line-height: 1.3; letter-spacing: -.025em; }
+        .esmalt-description { margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+        .esmalt-benefits { display: grid; gap: 4px; margin: 0 0 12px; padding: 0; list-style: none; }
         .esmalt-benefits li { display: flex; gap: 8px; color: #d0c5ca; font-size: 12px; line-height: 1.4; }
         .esmalt-benefits li::before {
           content: '✓'; display: grid; flex: 0 0 14px; place-items: center; width: 14px; height: 14px;
@@ -541,7 +542,7 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         }
         .esmalt-cta {
           position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: auto;
-          padding: 11px 12px 11px 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.25); border-radius: 12px;
+          padding: 8px 10px 8px 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.25); border-radius: 12px;
           background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 82%, white), var(--card-accent));
           color: #fff; font-size: 11px; font-weight: 700;
           box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 8px 18px -6px var(--card-accent);
@@ -556,7 +557,7 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
         .esmalt-cta:active { transform: translateY(0) scale(.98); }
         .esmalt-cta-arrow { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,.22); font-size: 13px; line-height: 1; transition: transform .3s var(--ease); }
         .esmalt-cta:hover .esmalt-cta-arrow { transform: translate(2px, -2px) rotate(8deg); }
-        .esmalt-footnote { position: relative; z-index: 1; margin: 20px 0 0; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.5; }
+        .esmalt-footnote { position: relative; z-index: 1; flex: 0 0 auto; margin: 12px 0 0; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.5; }
 
         /* Modal */
         .esmalt-backdrop {
@@ -620,10 +621,11 @@ function S3({ openVideo = null, setOpenVideo }: S3Props) {
 
         /* Responsivo */
         @media (max-width: 900px) {
-          .esmalt-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+          .esmalt-section { height: auto; }
+          .esmalt-grid { flex: none; grid-template-rows: none; grid-template-columns: repeat(2, minmax(0,1fr)); }
+          .esmalt-preview { flex: 0 0 auto; min-height: 150px; }
           .esmalt-cell:last-child { grid-column: 1 / -1; width: calc(50% - 11px); justify-self: center; }
-          .esmalt-description { min-height: 0; }
-        }
+          }
         @media (max-width: 620px) {
           .esmalt-heading { margin-bottom: 24px; }
           .esmalt-intro { font-size: 14px; }
