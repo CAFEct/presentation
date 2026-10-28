@@ -22,9 +22,9 @@ const crownImg = '/imgs/crown.png';
 
 /* O caminho: cada passo acende um degrau do pódio (do 3º ao 1º lugar). */
 const steps = [
-  { title: 'Beta fechado', desc: 'Convidar colegas e conhecidas que querem aprender manicure', color: '#7ef0c3' },
-  { title: 'Ouvir', desc: 'Formulário curto para saber o que travou e o que ajudou', color: '#8ec5ff' },
-  { title: 'Ajustar e abrir', desc: 'Melhorar o site e chegar à primeira formada no Hall da Fama', color: '#f0a9bf' },
+  { title: 'Primeiras alunas', desc: 'Convidamos um grupo pequeno de amigas e conhecidas que querem aprender manicure', color: '#7ef0c3' },
+  { title: 'Sua opinião conta', desc: 'Elas respondem um formulário rápido contando o que gostaram e o que podemos melhorar', color: '#8ec5ff' },
+  { title: 'Abertura para todas', desc: 'Com tudo ajustado, abrimos para todo mundo e celebramos a 1ª aluna formada no Hall da Fama', color: '#f0a9bf' },
 ];
 
 /* Ordem visual do pódio: 2º, 1º, 3º. "step" = passo que acende o degrau. */
@@ -42,7 +42,7 @@ const goals = [
 
 const channels = ['Instagram', 'WhatsApp', 'Parcerias com salões e escolas'];
 
-const AUTOPLAY_MS = 3600;
+const AUTOPLAY_MS = 36000;
 const vars = (o: Record<string, string | number>) => o as CSSProperties;
 
 /* ------------------------------------------------------------------ */
