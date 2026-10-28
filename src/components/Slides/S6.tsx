@@ -294,11 +294,6 @@ function S6() {
               </span>
             </button>
 
-            {after && (
-              <button type="button" className="s6-back" onClick={toggle}>
-                ↺ Ver como começou
-              </button>
-            )}
           </motion.div>
         </div>
       </div>
@@ -405,12 +400,6 @@ function S6() {
         }
         .s6-reveal:hover .s6-reveal-pill { transform: scale(1.06); animation-play-state: paused; }
         @keyframes s6-pulse { 50% { transform: translateY(-4px); } }
-        .s6-back {
-          position: absolute; z-index: 5; top: 14px; right: 16px; padding: 6px 12px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
-          background: rgba(15,10,14,.5); backdrop-filter: blur(10px); color: var(--s6-muted); font-size: 11px; font-weight: 700;
-          transition: color .25s, border-color .25s, transform .3s var(--s6-ease);
-        }
-        .s6-back:hover { color: #fff; border-color: #f0a9bf; transform: translateY(-2px); }
 
         /* Benefícios */
         .s6-benefits { flex: 0 0 auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
