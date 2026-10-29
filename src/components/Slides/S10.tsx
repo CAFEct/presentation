@@ -207,11 +207,13 @@ function S10() {
                   key={i}
                   className="s10-letter"
                   aria-hidden="true"
-                  initial={reduced ? false : { opacity: 0, y: 110, rotateX: -90, scale: 0.6, transformPerspective: 800 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                  initial={reduced ? false : { opacity: 0, y: 90, scale: 0.7 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 90, damping: 11, delay: 0.25 + i * 0.07 }}
                   whileHover={reduced ? undefined : { y: -24, rotate: i % 2 ? 5 : -5, scale: 1.14 }}
                 >
+
+
                   <span
                     className={`s10-glyph${ch === '!' ? ' is-bang' : ''}`}
                     style={{ '--i': i } as CSSProperties}
@@ -272,7 +274,7 @@ function S10() {
         /* Título em blocos 3D (extrusão rosa) */
         .s10-titlebox { position: relative; transform-style: preserve-3d; }
         .s10-title { position: relative; display: flex; margin: 0; font-size: 152px; font-weight: 900; line-height: 1.05; letter-spacing: -.05em; }
-        .s10-letter { display: inline-block; cursor: default; }
+        .s10-letter { display: inline-block; cursor: default; backface-visibility: hidden;}
         .s10-glyph {
           display: inline-block; color: #fff0f5; animation: s10-wave 4.4s ease-in-out infinite; animation-delay: calc(var(--i) * -.38s);
           text-shadow:
